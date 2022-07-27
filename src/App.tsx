@@ -5,7 +5,7 @@ import React from 'react';
 import Todos from './componets/Todos/Todos';
 import Footer from './componets/Footer/Footer';
 
-function App() {
+function App(props: any) {
   return (
     <div className="appWrapper">
       <Todos />

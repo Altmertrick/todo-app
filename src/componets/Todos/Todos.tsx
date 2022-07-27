@@ -1,17 +1,13 @@
 import s from './Todos.module.css';
 
-const Todo = (props: any) => {
-  return (
-    <div className={s.todoWrapper}>
-      <div>
-        <input type="checkbox" />
-        {props.text}
-      </div>
-      <div>
-        <button>Delete</button>
-      </div>
-    </div>
-  );
+import Todo from './Todo/Todo';
+
+const state = {
+  todos: [
+    { id: 1, text: 'Create Something', completed: false, color: null },
+    { id: 2, text: 'Learn React', completed: false, color: null },
+    { id: 3, text: 'Learn Redux', completed: false, color: null },
+  ],
 };
 
 const Todos = (props: any) => {
@@ -25,9 +21,9 @@ const Todos = (props: any) => {
       </div>
 
       <div>
-        <Todo text={'Create something'} />
-        <Todo text={'Learn React'} />
-        <Todo text={'Walk the dog'} />
+        {state.todos.map((todo) => (
+          <Todo key={todo.id} text={todo.text} completed={todo.completed} />
+        ))}
       </div>
     </div>
   );
