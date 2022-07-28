@@ -6,13 +6,11 @@
 
 .wrapper {
   width: 80%;
+  min-height: 60vh;
   margin: 20px auto;
+  padding: 10px;
 }
 
-.todoWrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 95%;
-  margin: 10px;
-  padding: 5px 10px;
+.wrapper_style {
+  padding: 40px;
 }

@@ -5,12 +5,13 @@ import Todos from '../../componets/Todos/Todos';
 const ADD_TODO = 'todos/AddTodo';
 const DELETE_TODO = 'todos/DeleteTodo';
 const TOGGLE_COMPLETED = 'todos/ToggleCompleted';
+const ADD_COLOR = 'todos/AddColorToTodo';
 
 const initialState = {
   todos: [
-    { id: '1', text: 'Create Something', completed: false, color: null },
+    { id: '1', text: 'Create Something', completed: false, color: 'green' },
     { id: '2', text: 'Learn React', completed: false, color: null },
-    { id: '3', text: 'Learn Redux', completed: false, color: null },
+    { id: '3', text: 'Learn Redux', completed: false, color: 'red' },
     { id: '4', text: 'Hello world', completed: true, color: null },
   ] as Array<Todo>,
 };
@@ -54,7 +55,20 @@ const todoReducer = (state = initialState, action: any): StateT => {
               completed: !todo.completed,
             };
           }
+          return todo;
+        }),
+      };
 
+    case ADD_COLOR:
+      return {
+        ...state,
+        todos: state.todos.map((todo) => {
+          if (todo.id === action.payload.id) {
+            return {
+              ...todo,
+              color: action.payload.color,
+            };
+          }
           return todo;
         }),
       };
@@ -78,6 +92,11 @@ export const deleteTodoAC = (id: string) => ({
 export const toggleCompletedAC = (id: string) => ({
   type: TOGGLE_COMPLETED,
   payload: { id },
+});
+
+export const addColorAC = (id: string, color: string) => ({
+  type: ADD_COLOR,
+  payload: { id, color },
 });
 
 export default todoReducer;

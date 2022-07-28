@@ -2,7 +2,7 @@ import s from './Footer.module.css';
 
 const Footer = (props: any) => {
   return (
-    <div className={s.wrapper}>
+    <div className={`${s.wrapper} ${s.wrapper_style}`}>
       <div>
         Actions:
         <div>

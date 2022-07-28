@@ -1,10 +1,11 @@
 import s from './Todos.module.css';
 
-import Todo from './Todo/Todo';
+import TodoItem from './TodoItem/TodoItem';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import {
+  addColorAC,
   addTodoAC,
   deleteTodoAC,
   toggleCompletedAC,
@@ -34,7 +35,8 @@ const Todos = (props: any) => {
   };
 
   //
-  const addTodo = () => {
+  const addTodo = (e: any) => {
+    e.preventDefault();
     dispatch(addTodoAC(newTodoText));
     setNewTodoText(' ');
   };
@@ -47,31 +49,39 @@ const Todos = (props: any) => {
     dispatch(toggleCompletedAC(id));
   };
 
+  const addColorTodo = (id: string, color: string) => {
+    dispatch(addColorAC(id, color));
+  };
+
   return (
-    <div className={s.wrapper}>
+    <div className={`${s.wrapper} ${s.wrapper_style}`}>
       <div>
-        <input
-          type="text"
-          placeholder="Create your todo"
-          value={newTodoText}
-          onChange={onInputChange}
-        />
-      </div>
-      <div>
-        <button onClick={addTodo}>ADD TODO</button>
+        <form onSubmit={addTodo}>
+          <input
+            type="text"
+            placeholder="Create your todo"
+            value={newTodoText}
+            onChange={onInputChange}
+          />
+        </form>
       </div>
 
       <div>
-        {todos.map((todo: any) => (
-          <Todo
-            key={todo.id}
-            id={todo.id}
-            text={todo.text}
-            completed={todo.completed}
-            deleteTodo={deleteTodo}
-            toggleCompleted={toggleCompleted}
-          />
-        ))}
+        {todos
+          .slice()
+          .reverse()
+          .map((todo: any) => (
+            <TodoItem
+              key={todo.id}
+              id={todo.id}
+              text={todo.text}
+              completed={todo.completed}
+              color={todo.color}
+              deleteTodo={deleteTodo}
+              toggleCompleted={toggleCompleted}
+              addColor={addColorTodo}
+            />
+          ))}
       </div>
     </div>
   );

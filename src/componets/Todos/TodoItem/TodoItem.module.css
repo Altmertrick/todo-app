@@ -1,0 +1,38 @@
+.todoWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  margin: 20px 0px;
+  padding: 10px 15px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.26);
+}
+
+.todoWrapper input {
+  background-color: #fff;
+  margin: 0;
+  margin-right: 10px;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 2px solid rgba(0, 0, 0, 0.322);
+  border-radius: 100px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+.todoWrapper input:checked {
+  cursor: pointer;
+
+  box-shadow: 0 6px 10px rgba(70, 123, 4, 0.433);
+}
+
+.todoWrapper input:active {
+  box-shadow: 0 60px 100px rgba(139, 250, 3, 0.98);
+}
+
+.todoWrapper input:hover {
+  cursor: pointer;
+
+  box-shadow: 0 6px 10px rgba(28, 29, 27, 0.433);
+}
