@@ -1,8 +1,7 @@
 import s from './Todos.module.css';
 
 import TodoItem from './TodoItem/TodoItem';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import {
   addColorAC,
