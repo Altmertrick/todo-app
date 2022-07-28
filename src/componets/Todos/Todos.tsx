@@ -1,8 +1,9 @@
 import s from './Todos.module.css';
+import React from 'react';
 
-import TodoItem from './TodoItem/TodoItem';
+import TodoList from './TodoList/TodoList';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, FunctionComponent } from 'react';
 import {
   addColorAC,
   addTodoAC,
@@ -10,22 +11,16 @@ import {
   toggleCompletedAC,
 } from '../../state/redusers/todos-reducer';
 
-const state = {
-  todos: [
-    { id: 1, text: 'Create Something', completed: false, color: null },
-    { id: 2, text: 'Learn React', completed: false, color: null },
-    { id: 3, text: 'Learn Redux', completed: false, color: null },
-  ],
-};
-
 const selectTodos = (state: any) => {
   return state.todosSection.todos;
 };
 
 const Todos = (props: any) => {
+  console.log('render todos ');
   const [newTodoText, setNewTodoText] = useState('');
 
   const todos = useSelector(selectTodos);
+
   const dispatch = useDispatch();
 
   ///
@@ -52,6 +47,8 @@ const Todos = (props: any) => {
     dispatch(addColorAC(id, color));
   };
 
+  const status = 'helohelo';
+
   return (
     <div className={`${s.wrapper} ${s.wrapper_style}`}>
       <div>
@@ -65,23 +62,13 @@ const Todos = (props: any) => {
         </form>
       </div>
 
-      <div>
-        {todos
-          .slice()
-          .reverse()
-          .map((todo: any) => (
-            <TodoItem
-              key={todo.id}
-              id={todo.id}
-              text={todo.text}
-              completed={todo.completed}
-              color={todo.color}
-              deleteTodo={deleteTodo}
-              toggleCompleted={toggleCompleted}
-              addColor={addColorTodo}
-            />
-          ))}
-      </div>
+      <TodoList
+        status={status}
+        todos={todos}
+        deleteTodo={deleteTodo}
+        toggleCompleted={toggleCompleted}
+        addColorTodo={addColorTodo}
+      />
     </div>
   );
 };
