@@ -3,8 +3,10 @@ import { v4 as uuid } from 'uuid';
 const ADD_TODO = 'todos/AddTodo';
 const DELETE_TODO = 'todos/DeleteTodo';
 const TOGGLE_COMPLETED = 'todos/ToggleCompleted';
-const ADD_COLOR = 'todos/AddColorToTodo';
+const ADD_COLOR_TODO = 'todos/AddColorToTodo';
+//
 const CHANGE_FILTER_STATUS = 'todos/ChangeFilterStatus';
+const ADD_OR_REMOVE_FILTER_COLOR = 'todos/AddOrRemoveFilterColor';
 
 type StatusFiltersT = {
   All: 'All';
@@ -21,12 +23,13 @@ export const statusFilters: StatusFiltersT = {
 const initialState = {
   todos: [
     { id: '1', text: 'Create Something', completed: false, color: 'green' },
-    { id: '2', text: 'Learn React', completed: false, color: null },
-    { id: '3', text: 'Learn Redux', completed: false, color: 'red' },
+    { id: '2', text: 'Learn Something', completed: false, color: null },
+    { id: '3', text: 'Solve coding problems', completed: false, color: 'red' },
     { id: '4', text: 'Hello world', completed: true, color: null },
   ] as Array<Todo>,
   filters: {
     status: statusFilters.All,
+    colors: [],
   },
 };
 
@@ -73,7 +76,7 @@ const todoReducer = (state = initialState, action: any): StateT => {
         }),
       };
 
-    case ADD_COLOR:
+    case ADD_COLOR_TODO:
       return {
         ...state,
         todos: state.todos.map((todo) => {
@@ -94,6 +97,30 @@ const todoReducer = (state = initialState, action: any): StateT => {
         ...state,
         filters: { ...state.filters, status: action.payload.status },
       };
+
+    case ADD_OR_REMOVE_FILTER_COLOR:
+      const { color, changeType } = action.payload;
+
+      if (changeType === 'add') {
+        return {
+          ...state,
+          filters: {
+            ...state.filters,
+            colors: [...state.filters.colors, color] as any,
+          },
+        };
+      }
+
+      if (changeType === 'remove') {
+        return {
+          ...state,
+          filters: {
+            ...state.filters,
+            colors: state.filters.colors.filter((c) => c !== color) as any,
+          },
+        };
+      }
+      return state;
 
     default:
       return state;
@@ -116,8 +143,8 @@ export const toggleCompletedAC = (id: string) => ({
   payload: { id },
 });
 
-export const addColorAC = (id: string, color: string) => ({
-  type: ADD_COLOR,
+export const addTodoColorAC = (id: string, color: string) => ({
+  type: ADD_COLOR_TODO,
   payload: { id, color },
 });
 
@@ -125,6 +152,14 @@ export const addColorAC = (id: string, color: string) => ({
 export const changeFilterStatusAC = (status: string) => ({
   type: CHANGE_FILTER_STATUS,
   payload: { status },
+});
+
+export const addOrRemoveFilterColorAC = (
+  color: string,
+  changeType: string
+) => ({
+  type: ADD_OR_REMOVE_FILTER_COLOR,
+  payload: { color, changeType },
 });
 
 export default todoReducer;

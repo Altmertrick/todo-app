@@ -15,7 +15,7 @@ const FilterByStatus = (props: any) => {
   const statusFilters = ['All', 'Active', 'Completed'];
 
   const filterOptions = statusFilters.map((status) => (
-    <div>
+    <div key={status}>
       <button
         className={status === currentStatusFilter ? s.selectedStatus : ' '}
         onClick={() => {

@@ -15,6 +15,7 @@
 }
 
 .footerSectionWrapper button {
+  cursor: pointer;
   background-color: rgba(19, 105, 234, 0.392);
   border: none;
 

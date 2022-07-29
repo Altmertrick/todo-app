@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, FunctionComponent } from 'react';
 import { statusFilters } from '../../state/redusers/todos-reducer';
 import {
-  addColorAC,
+  addTodoColorAC,
   addTodoAC,
   deleteTodoAC,
   toggleCompletedAC,
@@ -66,7 +66,7 @@ const Todos = (props: any) => {
   };
 
   const addColorTodo = (id: string, color: string) => {
-    dispatch(addColorAC(id, color));
+    dispatch(addTodoColorAC(id, color));
   };
 
   return (

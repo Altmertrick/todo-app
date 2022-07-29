@@ -12,25 +12,42 @@ export const selectCurrentStatusFilter = (state: any) => {
   return state.todosSection.filters.status;
 };
 
+export const selectColorFilters = (state: any): Array<string> => {
+  return state.todosSection.filters.colors;
+};
+
 //OutputSelector
-const filterTodosByStatus = (todos: any, status: any) => {
-  switch (status) {
-    case statusFilters.All:
-      return todos;
+const filterTodosByStatus = (
+  todos: any,
+  status: any,
+  colors: Array<string>
+) => {
+  //filter active -ret !todo.completed / true (todo.completed = false)
+  //filter completed -ret todo.completed = true
 
-    case statusFilters.Active:
-      return todos.filter((todo: any) => !todo.completed);
+  const showAllTodos = status === statusFilters.All;
+  const showActiveTodos = status === statusFilters.Active;
+  const showCompletedTodos = status === statusFilters.Completed;
 
-    case statusFilters.Completed:
-      return todos.filter((todo: any) => todo.completed);
+  return todos.filter((todo: any) => {
+    const colorMatches = colors.length === 0 || colors.includes(todo.color);
 
-    default:
-      return todos;
-  }
+    if (showAllTodos) {
+      return colorMatches;
+    }
+
+    if (showActiveTodos) {
+      return colorMatches && !todo.completed;
+    }
+
+    if (showCompletedTodos) {
+      return colorMatches && todo.completed;
+    }
+  });
 };
 //Memoizing selector
 export const selectFilteredTodos = createSelector(
-  [selectTodos, selectCurrentStatusFilter],
+  [selectTodos, selectCurrentStatusFilter, selectColorFilters],
   filterTodosByStatus
 );
 
