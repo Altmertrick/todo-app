@@ -13,3 +13,25 @@
 .footerSectionWrapper {
   padding: 10px;
 }
+
+.footerSectionWrapper button {
+  background-color: rgba(19, 105, 234, 0.392);
+  border: none;
+
+  padding: 5px 15px;
+  margin: 10px 0;
+  min-width: 135px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.1rem;
+  color: azure;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.321);
+}
+
+/* FilterByStatus */
+.footerSectionWrapper button.selectedStatus {
+  color: rgb(46, 44, 54);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.321);
+  background-color: rgba(230, 241, 248, 0.762);
+}

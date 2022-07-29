@@ -13,7 +13,6 @@ type TodoListT = {
   deleteTodo: (id: string) => void;
   toggleCompleted: (id: string) => void;
   addColorTodo: (id: string, color: string) => void;
-  status: string;
 };
 
 const TodoList = React.memo<TodoListT>(

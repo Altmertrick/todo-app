@@ -1,11 +1,22 @@
 import { v4 as uuid } from 'uuid';
 
-import Todos from '../../componets/Todos/Todos';
-
 const ADD_TODO = 'todos/AddTodo';
 const DELETE_TODO = 'todos/DeleteTodo';
 const TOGGLE_COMPLETED = 'todos/ToggleCompleted';
 const ADD_COLOR = 'todos/AddColorToTodo';
+const CHANGE_FILTER_STATUS = 'todos/ChangeFilterStatus';
+
+type StatusFiltersT = {
+  All: 'All';
+  Active: 'Active';
+  Completed: 'Completed';
+};
+
+export const statusFilters: StatusFiltersT = {
+  All: 'All',
+  Active: 'Active',
+  Completed: 'Completed',
+};
 
 const initialState = {
   todos: [
@@ -14,6 +25,9 @@ const initialState = {
     { id: '3', text: 'Learn Redux', completed: false, color: 'red' },
     { id: '4', text: 'Hello world', completed: true, color: null },
   ] as Array<Todo>,
+  filters: {
+    status: statusFilters.All,
+  },
 };
 
 type StateT = typeof initialState;
@@ -73,6 +87,14 @@ const todoReducer = (state = initialState, action: any): StateT => {
         }),
       };
 
+    ///
+
+    case CHANGE_FILTER_STATUS:
+      return {
+        ...state,
+        filters: { ...state.filters, status: action.payload.status },
+      };
+
     default:
       return state;
   }
@@ -97,6 +119,12 @@ export const toggleCompletedAC = (id: string) => ({
 export const addColorAC = (id: string, color: string) => ({
   type: ADD_COLOR,
   payload: { id, color },
+});
+
+///
+export const changeFilterStatusAC = (status: string) => ({
+  type: CHANGE_FILTER_STATUS,
+  payload: { status },
 });
 
 export default todoReducer;

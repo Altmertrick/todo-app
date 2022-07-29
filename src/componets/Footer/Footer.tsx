@@ -5,24 +5,15 @@ import RemainingTodos from './RemainingTodos/RemainingTodos';
 import FilterByStatus from './FilterByStatus/FilterByStatus';
 import FilterByColor from './FilterByColor/FilterByColor';
 import { useSelector } from 'react-redux';
+import {
+  selectActiveTodosNumber,
+  selectCompleteTodosNumber,
+} from '../../state/selectors/selectors';
 
 const Footer = (props: any) => {
-  const selectCompleteTodos = (state: any) => {
-    const todos = state.todosSection.todos.filter(
-      (todo: any) => todo.completed
-    );
-    return todos.length;
-  };
+  const completedTodos = useSelector(selectCompleteTodosNumber);
+  const activeTodos = useSelector(selectActiveTodosNumber);
 
-  const selectActiveTodos = (state: any) => {
-    const todos = state.todosSection.todos.filter(
-      (todo: any) => !todo.completed
-    );
-    return todos.length;
-  };
-
-  const completedTodos = useSelector(selectCompleteTodos);
-  const activeTodos = useSelector(selectActiveTodos);
   return (
     <div className={`${s.wrapper} ${s.wrapper_style}`}>
       <Actions />

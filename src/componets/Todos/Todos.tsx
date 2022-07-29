@@ -1,9 +1,11 @@
 import s from './Todos.module.css';
 import React from 'react';
+import { selectFilteredTodos } from '../../state/selectors/selectors';
 
 import TodoList from './TodoList/TodoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, FunctionComponent } from 'react';
+import { statusFilters } from '../../state/redusers/todos-reducer';
 import {
   addColorAC,
   addTodoAC,
@@ -11,15 +13,35 @@ import {
   toggleCompletedAC,
 } from '../../state/redusers/todos-reducer';
 
-const selectTodos = (state: any) => {
-  return state.todosSection.todos;
-};
+// const selectTodos = (state: any) => {
+//   return state.todosSection.todos;
+// };
+
+// const selectStatusFilter = (state: any) => {
+//   return state.todosSection.filters.status;
+// };
+
+// const filterTodosByStatus = (todos: any, status: any) => {
+//   switch (status) {
+//     case statusFilters.All:
+//       return todos;
+
+//     case statusFilters.Active:
+//       return todos.filter((todo: any) => !todo.completed);
+
+//     case statusFilters.Completed:
+//       return todos.filter((todo: any) => todo.completed);
+
+//     default:
+//       return todos;
+//   }
+// };
 
 const Todos = (props: any) => {
   console.log('render todos ');
   const [newTodoText, setNewTodoText] = useState('');
 
-  const todos = useSelector(selectTodos);
+  const todos = useSelector(selectFilteredTodos);
 
   const dispatch = useDispatch();
 
@@ -47,8 +69,6 @@ const Todos = (props: any) => {
     dispatch(addColorAC(id, color));
   };
 
-  const status = 'helohelo';
-
   return (
     <div className={`${s.wrapper} ${s.wrapper_style}`}>
       <div>
@@ -63,7 +83,6 @@ const Todos = (props: any) => {
       </div>
 
       <TodoList
-        status={status}
         todos={todos}
         deleteTodo={deleteTodo}
         toggleCompleted={toggleCompleted}
