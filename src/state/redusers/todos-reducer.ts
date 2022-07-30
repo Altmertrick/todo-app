@@ -7,6 +7,9 @@ const ADD_COLOR_TODO = 'todos/AddColorToTodo';
 //
 const CHANGE_FILTER_STATUS = 'todos/ChangeFilterStatus';
 const ADD_OR_REMOVE_FILTER_COLOR = 'todos/AddOrRemoveFilterColor';
+//
+const COMPLETE_ALL_TODOS = 'todos/CompleteAllTodos';
+const REMOVE_COMPLETED_TODOS = 'todos/RemoveCompletedTodos';
 
 type StatusFiltersT = {
   All: 'All';
@@ -20,6 +23,10 @@ export const statusFilters: StatusFiltersT = {
   Completed: 'Completed',
 };
 
+type StatusT =
+  | typeof statusFilters.All
+  | typeof statusFilters.Active
+  | typeof statusFilters.Completed;
 const initialState = {
   todos: [
     { id: '1', text: 'Create Something', completed: false, color: 'green' },
@@ -28,7 +35,7 @@ const initialState = {
     { id: '4', text: 'Hello world', completed: true, color: null },
   ] as Array<Todo>,
   filters: {
-    status: statusFilters.All,
+    status: statusFilters.All as StatusT,
     colors: [],
   },
 };
@@ -122,6 +129,26 @@ const todoReducer = (state = initialState, action: any): StateT => {
       }
       return state;
 
+    case COMPLETE_ALL_TODOS:
+      return {
+        ...state,
+        todos: state.todos.map((todo: any) => {
+          if (!todo.completed) {
+            return {
+              ...todo,
+              completed: true,
+            };
+          }
+          return todo;
+        }),
+      };
+
+    case REMOVE_COMPLETED_TODOS:
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => !todo.completed),
+      };
+
     default:
       return state;
   }
@@ -160,6 +187,15 @@ export const addOrRemoveFilterColorAC = (
 ) => ({
   type: ADD_OR_REMOVE_FILTER_COLOR,
   payload: { color, changeType },
+});
+
+///
+export const completeAllTodosAC = () => ({
+  type: COMPLETE_ALL_TODOS,
+});
+
+export const removeCompletedTodosAC = () => ({
+  type: REMOVE_COMPLETED_TODOS,
 });
 
 export default todoReducer;
