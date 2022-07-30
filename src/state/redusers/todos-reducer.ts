@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { ChangeTypeT, StatusT, TodoT } from '../../types/types';
 
 const ADD_TODO = 'todos/AddTodo';
 const DELETE_TODO = 'todos/DeleteTodo';
@@ -11,43 +12,26 @@ const ADD_OR_REMOVE_FILTER_COLOR = 'todos/AddOrRemoveFilterColor';
 const COMPLETE_ALL_TODOS = 'todos/CompleteAllTodos';
 const REMOVE_COMPLETED_TODOS = 'todos/RemoveCompletedTodos';
 
-type StatusFiltersT = {
-  All: 'All';
-  Active: 'Active';
-  Completed: 'Completed';
-};
-
-export const statusFilters: StatusFiltersT = {
+export const statusFilters = {
   All: 'All',
   Active: 'Active',
   Completed: 'Completed',
 };
 
-type StatusT =
-  | typeof statusFilters.All
-  | typeof statusFilters.Active
-  | typeof statusFilters.Completed;
 const initialState = {
   todos: [
     { id: '1', text: 'Create Something', completed: false, color: 'green' },
     { id: '2', text: 'Learn Something', completed: false, color: null },
     { id: '3', text: 'Solve coding problems', completed: false, color: 'red' },
     { id: '4', text: 'Hello world', completed: true, color: null },
-  ] as Array<Todo>,
+  ] as Array<TodoT>,
   filters: {
     status: statusFilters.All as StatusT,
-    colors: [],
+    colors: [] as Array<string>,
   },
 };
 
-type StateT = typeof initialState;
-
-type Todo = {
-  id: string;
-  text: string;
-  completed: boolean;
-  color: null | string;
-};
+export type StateT = typeof initialState;
 
 const todoReducer = (state = initialState, action: any): StateT => {
   switch (action.type) {
@@ -113,7 +97,7 @@ const todoReducer = (state = initialState, action: any): StateT => {
           ...state,
           filters: {
             ...state.filters,
-            colors: [...state.filters.colors, color] as any,
+            colors: [...state.filters.colors, color],
           },
         };
       }
@@ -123,7 +107,7 @@ const todoReducer = (state = initialState, action: any): StateT => {
           ...state,
           filters: {
             ...state.filters,
-            colors: state.filters.colors.filter((c) => c !== color) as any,
+            colors: state.filters.colors.filter((c) => c !== color),
           },
         };
       }
@@ -155,36 +139,60 @@ const todoReducer = (state = initialState, action: any): StateT => {
 };
 
 //Action Creators
-export const addTodoAC = (text: string) => ({
+type AddTodoT = {
+  type: typeof ADD_TODO;
+  payload: { text: string };
+};
+export const addTodoAC = (text: string): AddTodoT => ({
   type: ADD_TODO,
   payload: { text },
 });
 
-export const deleteTodoAC = (id: string) => ({
+type DeleteTodoT = {
+  type: typeof DELETE_TODO;
+  payload: { id: string };
+};
+export const deleteTodoAC = (id: string): DeleteTodoT => ({
   type: DELETE_TODO,
   payload: { id },
 });
 
+type ToggleCompletedT = {
+  type: typeof TOGGLE_COMPLETED;
+  payload: { id: string };
+};
 export const toggleCompletedAC = (id: string) => ({
   type: TOGGLE_COMPLETED,
   payload: { id },
 });
 
-export const addTodoColorAC = (id: string, color: string) => ({
+type AddTodoColorT = {
+  type: typeof ADD_COLOR_TODO;
+  payload: { id: string; color: string };
+};
+export const addTodoColorAC = (id: string, color: string): AddTodoColorT => ({
   type: ADD_COLOR_TODO,
   payload: { id, color },
 });
 
 ///
-export const changeFilterStatusAC = (status: string) => ({
+type ChangeFilterStatusT = {
+  type: typeof CHANGE_FILTER_STATUS;
+  payload: { status: string };
+};
+export const changeFilterStatusAC = (status: string): ChangeFilterStatusT => ({
   type: CHANGE_FILTER_STATUS,
   payload: { status },
 });
 
+type AddOrRemoveFilterColorT = {
+  type: typeof ADD_OR_REMOVE_FILTER_COLOR;
+  payload: { color: string; changeType: ChangeTypeT };
+};
 export const addOrRemoveFilterColorAC = (
   color: string,
-  changeType: string
-) => ({
+  changeType: ChangeTypeT
+): AddOrRemoveFilterColorT => ({
   type: ADD_OR_REMOVE_FILTER_COLOR,
   payload: { color, changeType },
 });

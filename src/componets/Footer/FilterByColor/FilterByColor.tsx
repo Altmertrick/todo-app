@@ -2,11 +2,12 @@ import s from './../Footer.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addOrRemoveFilterColorAC } from '../../../state/redusers/todos-reducer';
 import { selectColorFilters } from '../../../state/selectors/selectors';
+import { ChangeTypeT } from '../../../types/types';
 
 const FilterByColor = (props: any) => {
   const dispatch = useDispatch();
 
-  const addColorFilter = (color: string, changeType: string) => {
+  const changeColorFilter = (color: string, changeType: ChangeTypeT) => {
     dispatch(addOrRemoveFilterColorAC(color, changeType));
   };
 
@@ -24,7 +25,7 @@ const FilterByColor = (props: any) => {
           type="checkbox"
           checked={isChecked}
           readOnly
-          onClick={() => addColorFilter(color, changeType)}
+          onClick={() => changeColorFilter(color, changeType)}
         />
         <span>{color}</span>
       </div>

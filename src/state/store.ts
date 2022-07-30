@@ -7,6 +7,9 @@ const store = configureStore({
   },
 });
 
+export type RootStateT = ReturnType<typeof store.getState>;
+export type AppDispatchT = typeof store.dispatch;
+
 declare global {
   interface Window {
     store: any;
