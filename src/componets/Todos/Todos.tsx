@@ -13,30 +13,6 @@ import {
   toggleCompletedAC,
 } from '../../state/redusers/todos-reducer';
 
-// const selectTodos = (state: any) => {
-//   return state.todosSection.todos;
-// };
-
-// const selectStatusFilter = (state: any) => {
-//   return state.todosSection.filters.status;
-// };
-
-// const filterTodosByStatus = (todos: any, status: any) => {
-//   switch (status) {
-//     case statusFilters.All:
-//       return todos;
-
-//     case statusFilters.Active:
-//       return todos.filter((todo: any) => !todo.completed);
-
-//     case statusFilters.Completed:
-//       return todos.filter((todo: any) => todo.completed);
-
-//     default:
-//       return todos;
-//   }
-// };
-
 const Todos = (props: any) => {
   console.log('render todos ');
   const [newTodoText, setNewTodoText] = useState('');
@@ -74,8 +50,9 @@ const Todos = (props: any) => {
       <div>
         <form onSubmit={addTodo}>
           <input
+            autoFocus
             type="text"
-            placeholder="Create your todo"
+            placeholder="Type your todo"
             value={newTodoText}
             onChange={onInputChange}
           />
