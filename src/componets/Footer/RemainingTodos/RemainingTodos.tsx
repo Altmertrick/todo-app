@@ -9,8 +9,15 @@ type PropsT = {
 const RemainingTodos: FunctionComponent<PropsT> = (props: any) => {
   return (
     <div className={s.footerSectionWrapper}>
-      <div>Active Todos: {props.activeTodos}</div>
-      <div>Completed Todos: {props.completedTodos}</div>
+      <div>
+        <div>Active Todos:</div>
+        <div>{props.activeTodos}</div>
+      </div>
+
+      <div>
+        <div>Completed Todos:</div>
+        <div>{props.completedTodos}</div>
+      </div>
     </div>
   );
 };
